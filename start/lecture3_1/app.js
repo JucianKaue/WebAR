@@ -1,5 +1,5 @@
 import * as THREE from '../../libs/three/three.module.js';
-import { ARButton } from '../../libs/three/jsm/ARButton.js';
+import { VRButton } from '../../libs/three/jsm/VRButton.js';
 import { XRControllerModelFactory } from '../../libs/three/jsm/XRControllerModelFactory.js';
 import { BoxLineGeometry } from '../../libs/three/jsm/BoxLineGeometry.js';
 import { Stats } from '../../libs/stats.module.js';
@@ -55,7 +55,8 @@ class App{
         this.radius = 0.08;
 
         this.room = new THREE.LineSegments(
-            new BoxLineGeometry(6,6,6,10,10,10)
+            new BoxLineGeometry(6,6,6,10,10,10),
+            new THREE.LineBasicMaterial({color: 0x808080})
         );
         this.room.geometry.translate(0, 3, 0);
         this.scene.add(this.room);
@@ -81,7 +82,7 @@ class App{
     
     setupXR(){
         this.renderer.xr.enabled = true;
-        document.body.appendChild( ARButton.createButton(this.renderer));
+        document.body.appendChild( VRButton.createButton(this.renderer));
     }
     
     resize(){
