@@ -126,20 +126,30 @@ class App{
                     });
 
                     self.info = info;
-                    self.ui.updateElement( "info", JSON.stringify(info) );
+                    self.gui.updateElement( "info", JSON.stringify(info) );
 
                 } );
             }
         }
         
         function onSessionStart(){
-            
+            self.ui.mesh.position.set(0, -0.5, -1.1);
+            self.camera.add(self.ui.mesh);
         }
         
         function onSessionEnd(){
-            
+           self.camera.remove(self.ui.mesh);
         }
         
+        const btn = new ARButton(this.renderer, {onSessionStart, onSessionEnd, sessionInit: {optionalFeatures: ['dom-overlay'], domOverlay: {root: document.body}}});
+
+        const controller_ = this.renderer.xr.getController(0);
+        controller_.addEventListener('connected', onConnected);
+
+        this.scene.add(controller_);
+        this.controller = controller_;
+
+
         this.renderer.setAnimationLoop( this.render.bind(this) );
     }
     
