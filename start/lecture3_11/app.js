@@ -1,5 +1,5 @@
 import * as THREE from '../../libs/three125/three.module.js';
-import { OrbitControls } from '../../libs/three125OrbitControls.js';
+import { OrbitControls } from '../../libs/three125/OrbitControls.js';
 import { GLTFLoader } from '../../libs/three125/GLTFLoader.js';
 import { Stats } from '../../libs/stats.module.js';
 import { CanvasUI } from '../../libs/three125/CanvasUI.js'
@@ -142,7 +142,8 @@ class App{
         const btn = new ARButton( this.renderer, { onSessionStart, onSessionEnd } );
         
         //Add gestures here
-        this.gestures = new ControllerGestures('tap', (ev) => {
+        this.gestures = new ControllerGestures(this.renderer);
+        this.gestures.addEventListener('tap', (ev) => {
             console.log('tap');
             self.ui.updateElement('info', 'tap');
 
