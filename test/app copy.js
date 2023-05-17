@@ -1,10 +1,8 @@
-
-
 import * as THREE from '../libs/three125/three.module.js';
 import { OrbitControls } from '../libs/three125/OrbitControls.js';
-import { GLTFLoader } from ''../libs/three125/GLTFLoader.js';
+import { GLTFLoader } from '../libs/three125/GLTFLoader.js';
 import { Stats } from '../libs/stats.module.js';
-import { CanvasUI } from '../libs/three125/CanvasUI.js'
+import { CanvasUI } from '../libs/three125/CanvasUI.js';
 import { ARButton } from '../libs/ARButton.js';
 import { LoadingBar } from '../libs/LoadingBar.js';
 import { Player } from '../libs/three125/Player.js';
