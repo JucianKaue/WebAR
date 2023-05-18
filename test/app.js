@@ -3,7 +3,7 @@ import { OrbitControls } from './libs/three125/OrbitControls.js';
 import { GLTFLoader } from './libs/three125/GLTFLoader.js';
 import { Stats } from './libs/stats.module.js';
 import { CanvasUI } from './libs/three125/CanvasUI.js'
-import { ARButton } from './libs/ARButton.js';
+import { ARButton } from './libs/three/jsm/ARButton.js';
 import { LoadingBar } from './libs/LoadingBar.js';
 import { Player } from './libs/three125/Player.js';
 import { ControllerGestures } from './libs/three125/ControllerGestures.js';
@@ -44,41 +44,41 @@ class App{
         this.euler = new THREE.Euler();
         this.quaternion = new THREE.Quaternion();
         
-        this.initScene();
+        //this.initScene();
         this.setupXR();
         
         window.addEventListener('resize', this.resize.bind(this) );
 	}	
     
     initScene(){
-        this.loadingBar = new LoadingBar();
+        // this.loadingBar = new LoadingBar();
         
-        this.assetsPath = './assets/';
-        const loader = new GLTFLoader().setPath(this.assetsPath);
-		const self = this;
+        // this.assetsPath = './assets/';
+        // const loader = new GLTFLoader().setPath(this.assetsPath);
+		// const self = this;
 		
-		// Load a GLTF resource
-		loader.load(
-			// resource URL
-			`dog.glb`,
-			// called when the resource is loaded
-			function ( gltf ) {
-				const model = gltf.scene;
-				model.position.set( 1, 1, 0 );
-				model.scale.set( 0.1, 0.1, 0.1 );
-				self.scene.add( model );
+		// // Load a GLTF resource
+		// loader.load(
+		// 	// resource URL
+		// 	`dog.glb`,
+		// 	// called when the resource is loaded
+		// 	function ( gltf ) {
+		// 		const model = gltf.scene;
+		// 		model.position.set( 1, 1, 0 );
+		// 		model.scale.set( 0.1, 0.1, 0.1 );
+		// 		self.scene.add( model );
 
-                self.loadingBar.visible = false;
-			},
-			// called while loading is progressing
-			function ( xhr ) {
-				self.loadingBar.progress = (xhr.loaded / xhr.total);
-			},
-			// called when loading has errors
-			function ( error ) {
-				console.log(error);
-			}
-		);
+        //         self.loadingBar.visible = false;
+		// 	},
+		// 	// called while loading is progressing
+		// 	function ( xhr ) {
+		// 		self.loadingBar.progress = (xhr.loaded / xhr.total);
+		// 	},
+		// 	// called when loading has errors
+		// 	function ( error ) {
+		// 		console.log(error);
+		// 	}
+		// );
     }
     
     setupXR(){
@@ -88,8 +88,8 @@ class App{
         let controller, controller1;
         
         function onSessionStart(){
-            // self.ui.mesh.position.set( 0, -0.2, -0.3 );
-            // self.camera.add( self.ui.mesh );
+            self.ui.mesh.position.set( 0, -0.2, -0.3 );
+            self.camera.add( self.ui.mesh );
         }
         
         function onSessionEnd(){
