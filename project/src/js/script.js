@@ -1,8 +1,8 @@
-import * as THREE from 'three'; // Three.js module
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'; // Module to control the camera with mouse
-import * as dat from 'dat.gui';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-import {ARButton} from 'three/examples/jsm/webxr/ARButton';
+import * as THREE from '../../node_modules/three'; // Three.js module
+import { OrbitControls } from '../../node_modules/three/examples/jsm/controls/OrbitControls'; // Module to control the camera with mouse
+// import * as dat from 'dat.gui';
+import { GLTFLoader } from '../../node_modules/three/examples/jsm/loaders/GLTFLoader';
+import {ARButton} from '../../node_modules/three/examples/jsm/webxr/ARButton';
 
 const blueBlendUrl = new URL('../assets/flyblueblend.glb', import.meta.url);
 
