@@ -1,4 +1,4 @@
-import * as THREE from '../../node_modules/three/build/three.js'; // Three.js module
+import * as THREE from '../../node_modules/@types/three/src/Three.d.ts'; // Three.js module
 import { OrbitControls } from '../../node_modules/three/examples/jsm/controls/OrbitControls.js'; // Module to control the camera with mouse
 // import * as dat from 'dat.gui';
 import { GLTFLoader } from '../../node_modules/three/examples/jsm/loaders/GLTFLoader.js';
