@@ -83,7 +83,6 @@ directionalLight.castShadow = true;
 // scene.add(dLightShadowHelper)
 
 const assetLoader = new GLTFLoader();
-let blueblend;
 
 assetLoader.load(blueBlendUrl.href, function(gltf) {
     const model = gltf.scene;
