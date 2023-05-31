@@ -16,7 +16,7 @@ class App{
         this.clock = new THREE.Clock();
         
 		this.camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.01, 1000 );
-        this.camera.position.x = -10
+        this.camera.position.z = 10
         this.camera.position.y = 5
 		
 		this.scene = new THREE.Scene();
@@ -62,7 +62,7 @@ class App{
         loader.load(blueBlendUrl.href, function(gltf) {
             const model = gltf.scene;
             self.scene.add(model);
-            model.position.set(2, -5, 0);
+            model.position.set(0, -5, -5);
             model.visible = true;
 
             self.loadingBar.visible = false;
