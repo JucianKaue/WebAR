@@ -57,13 +57,25 @@ class App{
 
         const loader = new GLTFLoader();
 		const self = this;
-        const blueBlendUrl = new URL('./flyblueblend.glb', import.meta.url);
+        const blueBlendUrl = new URL('./cartoon.glb', import.meta.url);
 		
         loader.load(blueBlendUrl.href, function(gltf) {
             const model = gltf.scene;
-            self.scene.add(model);
-            model.position.set(0, -5, -5);
+            model.position.set(0, 0, 0);
             model.visible = true;
+
+            const options = {
+                object: model,
+                speed: 0.5,
+                animations: gltf.animations,
+                clip: gltf.animations[0],
+                app: self,
+                name: 'knight',
+                npc: false
+            };
+            self.model = new Player(options);
+            self.model.action = 'Dance';
+            self.model.object.scale.set(1.5, 1.5, 1.5);
 
             self.loadingBar.visible = false;
         }, undefined, function(error) {
