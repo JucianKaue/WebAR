@@ -37,7 +37,7 @@ class App{
 		container.appendChild( this.renderer.domElement );
         
         this.controls = new OrbitControls( this.camera, this.renderer.domElement );
-        this.controls.target.set(0, 3.5, 0);
+        this.controls.target.set(0, 0, 0);
         this.controls.update();
         
         this.stats = new Stats();
@@ -75,7 +75,7 @@ class App{
             };
             self.model = new Player(options);
             self.model.action = 'Dance';
-            self.model.object.scale.set(1.5, 1.5, 1.5);
+            self.model.object.scale.set(0.5, 0.5, 0.5);
 
             self.loadingBar.visible = false;
         }, undefined, function(error) {
