@@ -66,7 +66,6 @@ class App{
                 object: model,
                 speed: 0.5,
                 animations: gltf.animations,
-                clip: gltf.animations[0],
                 app: self,
                 name: 'cartoon',
                 npc: false
@@ -74,7 +73,7 @@ class App{
 
             self.cartoon = new Player(options);
             self.cartoon.object.scale.set(0.5, 0.5, 0.5);
-            self.cartoon.object.visible = false;
+            self.cartoon.object.visible = true;
 
             self.loadingBar.visible = false;
         }, undefined, function(error) {
