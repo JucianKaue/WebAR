@@ -61,8 +61,7 @@ class App{
 		
         loader.load(blueBlendUrl.href, function(gltf) {
             const model = gltf.scene;
-            model.position.set(0, 0, 0);
-            model.visible = true;
+            model.visible = false;
 
             const options = {
                 object: model,
@@ -70,7 +69,7 @@ class App{
                 animations: gltf.animations,
                 clip: gltf.animations[0],
                 app: self,
-                name: 'knight',
+                name: 'cartoon',
                 npc: false
             };
             self.model = new Player(options);
@@ -168,16 +167,16 @@ class App{
         
         //Add gestures here
         this.gestures = new ControllerGestures(this.renderer);
-        // this.gestures.addEventListener('tap', (ev) => {
-        //     console.log('tap');
-        //     self.ui.updateElement('info', 'tap');
+        this.gestures.addEventListener('tap', (ev) => {
+            console.log('tap');
+            self.ui.updateElement('info', 'tap');
 
-        //     if (!self.knight.object.visible) {
-        //         self.knight.object.visible = true;
-        //         self.knight.object.position.set(0, -0.3, -0.5).add(ev.position);
-        //         self.scene.add(self.knight.object);
-        //     }
-        // });
+            if (!self.cartoon.object.visible) {
+                self.cartoon.object.visible = true;
+                self.cartoon.object.position.set(0, -0.3, -0.5).add(ev.position);
+                self.scene.add(self.cartoon.object);
+            }
+        });
 
         // this.gestures.addEventListener('swipe', (ev) => {
         //     console.log(ev);
