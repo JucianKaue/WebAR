@@ -61,7 +61,6 @@ class App{
 		
         loader.load(blueBlendUrl.href, function(gltf) {
             const model = gltf.scene;
-            model.visible = false;
 
             const options = {
                 object: model,
@@ -72,9 +71,10 @@ class App{
                 name: 'cartoon',
                 npc: false
             };
-            self.model = new Player(options);
-            self.model.action = 'Dance';
-            self.model.object.scale.set(0.5, 0.5, 0.5);
+
+            self.cartoon = new Player(options);
+            self.cartoon.object.scale.set(0.5, 0.5, 0.5);
+            self.cartoon.object.visible = false;
 
             self.loadingBar.visible = false;
         }, undefined, function(error) {
