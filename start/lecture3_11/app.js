@@ -1,12 +1,12 @@
-import * as THREE from '../../libs/three125/three.module.js';
-import { OrbitControls } from '../../libs/three125/OrbitControls.js';
-import { GLTFLoader } from '../../libs/three125/GLTFLoader.js';
+import * as THREE from '../../libs/three/three.module.js';
+import { OrbitControls } from '../../libs/three/jsm/OrbitControls.js';
+import { GLTFLoader } from '../../libs/three/jsm/GLTFLoader.js';
 import { Stats } from '../../libs/stats.module.js';
-import { CanvasUI } from '../../libs/three125/CanvasUI.js'
+import { CanvasUI } from '../../libs/CanvasUI.js'
 import { ARButton } from '../../libs/ARButton.js';
 import { LoadingBar } from '../../libs/LoadingBar.js';
-import { Player } from '../../libs/three125/Player.js';
-import { ControllerGestures } from '../../libs/three125/ControllerGestures.js';
+import { Player } from '../../libs/Player.js';
+import { ControllerGestures } from '../../libs/ControllerGestures.js';
 
 class App{
 	constructor(){
@@ -15,9 +15,7 @@ class App{
         
         this.clock = new THREE.Clock();
         
-		this.camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.01, 1000 );
-        this.camera.position.z = 10
-        this.camera.position.y = 5
+		this.camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.01, 20 );
 		
 		this.scene = new THREE.Scene();
         
@@ -37,7 +35,7 @@ class App{
 		container.appendChild( this.renderer.domElement );
         
         this.controls = new OrbitControls( this.camera, this.renderer.domElement );
-        this.controls.target.set(0, 0, 0);
+        this.controls.target.set(0, 3.5, 0);
         this.controls.update();
         
         this.stats = new Stats();
@@ -54,79 +52,58 @@ class App{
     
     initScene(){
         this.loadingBar = new LoadingBar();
-
-        const loader = new GLTFLoader();
+        
+        this.assetsPath = '../../assets/';
+        const loader = new GLTFLoader().setPath(this.assetsPath);
 		const self = this;
-        const blueBlendUrl = new URL('./cartoon.glb', import.meta.url);
 		
-        loader.load(blueBlendUrl.href, function(gltf) {
-            const model = gltf.scene;
-
-            const options = {
-                object: model,
-                speed: 0.5,
-                animations: gltf.animations,
-                app: self,
-                name: 'cartoon',
-                npc: false
-            };
-
-            self.cartoon = new Player(options);
-            self.cartoon.object.scale.set(0.5, 0.5, 0.5);
-            self.cartoon.object.visible = true;
-
-            self.loadingBar.visible = false;
-        }, undefined, function(error) {
-            console.log(error)
-        });
-
-		// // Load a GLTF resource
-		// loader.load(
-		// 	// resource URL
-		// 	`knight2.glb`,
-		// 	// called when the resource is loaded
-		// 	function ( gltf ) {
-		// 		const object = gltf.scene.children[5];
+		// Load a GLTF resource
+		loader.load(
+			// resource URL
+			`knight2.glb`,
+			// called when the resource is loaded
+			function ( gltf ) {
+				const object = gltf.scene.children[5];
 				
-		// 		object.traverse(function(child){
-		// 			if (child.isMesh){
-        //                 child.material.metalness = 0;
-        //                 child.material.roughness = 1;
-		// 			}
-		// 		});
+				object.traverse(function(child){
+					if (child.isMesh){
+                        child.material.metalness = 0;
+                        child.material.roughness = 1;
+					}
+				});
 				
-		// 		const options = {
-		// 			object: object,
-		// 			speed: 0.5,
-		// 			animations: gltf.animations,
-		// 			clip: gltf.animations[0],
-		// 			app: self,
-		// 			name: 'knight',
-		// 			npc: false
-		// 		};
+				const options = {
+					object: object,
+					speed: 0.5,
+					animations: gltf.animations,
+					clip: gltf.animations[0],
+					app: self,
+					name: 'knight',
+					npc: false
+				};
 				
-		// 		self.knight = new Player(options);
-        //         self.knight.object.visible = false;
+				self.knight = new Player(options);
+                self.knight.object.visible = false;
 				
-		// 		self.knight.action = 'Dance';
-		// 		const scale = 0.003;
-		// 		self.knight.object.scale.set(scale, scale, scale); 
+				self.knight.action = 'Dance';
+				const scale = 0.003;
+				self.knight.object.scale.set(scale, scale, scale); 
 				
-        //         self.loadingBar.visible = false;
-		// 	},
-		// 	// called while loading is progressing
-		// 	function ( xhr ) {
+                self.loadingBar.visible = false;
+			},
+			// called while loading is progressing
+			function ( xhr ) {
 
-		// 		self.loadingBar.progress = (xhr.loaded / xhr.total);
+				self.loadingBar.progress = (xhr.loaded / xhr.total);
 
-		// 	},
-		// 	// called when loading has errors
-		// 	function ( error ) {
+			},
+			// called when loading has errors
+			function ( error ) {
 
-		// 		console.log( 'An error happened' );
+				console.log( 'An error happened' );
 
-		// 	}
-		// );
+			}
+		);
         
         this.createUI();
     }
@@ -165,61 +142,8 @@ class App{
         const btn = new ARButton( this.renderer, { onSessionStart, onSessionEnd } );
         
         //Add gestures here
-        this.gestures = new ControllerGestures(this.renderer);
-        this.gestures.addEventListener('tap', (ev) => {
-            console.log('tap');
-            self.ui.updateElement('info', 'tap');
-
-            if (!self.cartoon.object.visible) {
-                self.cartoon.object.visible = true;
-                self.cartoon.object.position.set(0, -0.3, -0.5).add(ev.position);
-                self.scene.add(self.cartoon.object);
-            }
-        });
-
-        // this.gestures.addEventListener('swipe', (ev) => {
-        //     console.log(ev);
-        //     self.ui.updateElement('info', `swipe ${ev.direction}`);
-        //     if (self.knight.object.visible) {
-        //         self.knight.object.visible = false;
-        //         self.scene.remove(self.knight.object);
-        //     };
-        // });
-
-        // this.gestures.addEventListener('pan', (ev)=> {
-        //     console.log(ev);
-        //     if (ev.initialise !== undefined) {
-        //         self.startPosition = self.knight.object.position.clone();
-        //     } else {
-        //         const pos = self.startPosition.clone().add(ev.delta.multiplyScalar(3));
-        //         self.knight.object.position.copy(pos);
-        //         self.ui.updateElement('info', `pan x:${ev.delta.x.toFixed(3)} y:${ev.dela.y.toFixed(3)} z:${ev.delta.z.toFixed(3)}`);
-        //     }
-        // });
-
-        // this.gestures.addEventListener('pinch', (ev)=>{
-        //     console.log(ev);
-        //     if (ev.initialise !== undefined) {
-        //         self.startScale = self.knight.object.scale.clone();
-        //     } else {
-        //         const scale = self.startScale.clone().multiplyScalar(ev.scalar);
-        //         self.knight.object.scale.copy(scale);
-        //         self.ui.updateElement('info', `pinch delta:${ev.delta.toFixed(3)} scale:${ev.scale.toFixed(2)}`);
-        //     }
-        // });
-
-        // this.gestures.addEventListener('rotate', (ev)=> {
-        //     console.log(ev);
-        //     if (ev.initialise !== undefined) {
-        //         self.startQuaternion = self.knight.quaternion.clone();
-        //     } else {
-        //         self.knight.object.quaternion.copy(self.startQuaternion);
-        //         self.knight.object.rotateY(ev.theta);
-        //         self.ui.updateElement('info', `rotate ${ev.theta.toFixed(3)}`);
-        //     }
-        // });
         
-        this.renderer.setAnimationLoop( this.render.bind(this));
+        this.renderer.setAnimationLoop( this.render.bind(this) );
     }
     
     resize(){
@@ -235,7 +159,7 @@ class App{
             this.gestures.update();
             this.ui.update();
         }
-        // if ( this.knight !== undefined ) this.knight.update(dt);
+        if ( this.knight !== undefined ) this.knight.update(dt);
         this.renderer.render( this.scene, this.camera );
     }
 }

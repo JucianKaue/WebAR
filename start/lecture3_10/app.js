@@ -1,13 +1,13 @@
-import * as THREE from '../../libs/three125/three.module.js';
-import { OrbitControls } from '../../libs/three125/OrbitControls.js';
-import { GLTFLoader } from '../../libs/three125/GLTFLoader.js';
+import * as THREE from '../../libs/three/three.module.js';
+import { OrbitControls } from '../../libs/three/jsm/OrbitControls.js';
+import { GLTFLoader } from '../../libs/three/jsm/GLTFLoader.js';
 import { Stats } from '../../libs/stats.module.js';
-import { CanvasUI } from '../../libs/three125/CanvasUI.js'
+import { CanvasUI } from '../../libs/CanvasUI.js'
 import { ARButton } from '../../libs/ARButton.js';
 import {
 	Constants as MotionControllerConstants,
 	fetchProfile
-} from '../../libs/three125/motion-controllers.module.js';
+} from '../../libs/three/jsm/motion-controllers.module.js';
 
 const DEFAULT_PROFILES_PATH = 'https://cdn.jsdelivr.net/npm/@webxr-input-profiles/assets@1.0/dist/profiles';
 const DEFAULT_PROFILE = 'generic-trigger';
@@ -126,30 +126,20 @@ class App{
                     });
 
                     self.info = info;
-                    self.gui.updateElement( "info", JSON.stringify(info) );
+                    self.ui.updateElement( "info", JSON.stringify(info) );
 
                 } );
             }
         }
         
         function onSessionStart(){
-            self.ui.mesh.position.set(0, -0.5, -1.1);
-            self.camera.add(self.ui.mesh);
+            
         }
         
         function onSessionEnd(){
-           self.camera.remove(self.ui.mesh);
+            
         }
         
-        const btn = new ARButton(this.renderer, {onSessionStart, onSessionEnd, sessionInit: {optionalFeatures: ['dom-overlay'], domOverlay: {root: document.body}}});
-
-        const controller_ = this.renderer.xr.getController(0);
-        controller_.addEventListener('connected', onConnected);
-
-        this.scene.add(controller_);
-        this.controller = controller_;
-
-
         this.renderer.setAnimationLoop( this.render.bind(this) );
     }
     

@@ -67,7 +67,7 @@ class App{
     }
     
     initScene(){
-        this.loadGLTF( 'flyblueblend' );
+        this.loadGLTF( 'knight' );
     }
     
     addButtonEvents(){
@@ -97,32 +97,12 @@ class App{
 			`${filename}.glb`,
 			// called when the resource is loaded
 			function ( gltf ) {
-                self.animations = {};
-
-                gltf.animations.forEach( anim => {
-                    self.animations[anim.name] = anim;
-                })
-
-                self.addButtonEvents();
-
-                self.blue = gltf.scene.children[0];
-
-                self.mixer = new THREE.AnimationMixer(self.blue);
-
-                self.scene.add(self.blue);
-
-                self.loadingBar.visible = false;
-
-                self.action = 'Idle';
-
-                const scale = 0.5
-                self.blue.scale.set(scale, scale, scale);
-
+                
                 self.renderer.setAnimationLoop( self.render.bind(self) );
 			},
 			// called while loading is progressing
 			function ( xhr ) {
-                
+
 				self.loadingBar.progress = (xhr.loaded / xhr.total);
 				
 			},

@@ -33,9 +33,8 @@ class App{
 		container.appendChild( this.renderer.domElement );
 		
         //Add code here
-        this.LoadingBar = new LoadingBar();
-        this.loadGLTF();
-
+        
+        
         this.controls = new OrbitControls( this.camera, this.renderer.domElement );
         this.controls.target.set(0, 3.5, 0);
         this.controls.update();
@@ -63,24 +62,6 @@ class App{
     
     loadGLTF(){
         const self = this;
-        const loader = new GLTFLoader().setPath('../../assets/');
-
-        loader.load(
-            'flyblueblend.glb',
-            function(gltf) {
-                self.blue = gltf.scene;
-                self.scene.add(gltf.scene);
-                self.LoadingBar.visible = false;
-                self.renderer.setAnimationLoop(self.render.bind(self));
-            },
-            function(xhr) {
-                self.LoadingBar.progress = xhr.loaded/xhr.total;
-            },
-            function(err) {
-                console.log('An error happened');
-            }
-        );
-
     }
     
     loadFBX(){
@@ -93,7 +74,7 @@ class App{
     }
     
 	render( ) {   
-        this.renderer.animate();
+        this.chair.rotateY( 0.01 );
         this.renderer.render( this.scene, this.camera );
     }
 }
