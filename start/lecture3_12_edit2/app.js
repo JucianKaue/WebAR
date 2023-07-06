@@ -81,10 +81,10 @@ class App{
 		// Load a GLTF resource
 		loader.load(
 			// resource URL
-			`mario_.glb`,
+			`mario_simple.glb`,
 			// called when the resource is loaded
 			function ( gltf ) {
-				const object = gltf.scene;
+				const object = gltf.scene.children[0];
 				
 				const options = {
 					object: object,
@@ -102,9 +102,12 @@ class App{
                 self.knight.object.visible = false;
                 console.log(self.knight)
 				
-				self.knight.action = 'dance1';
-				const scale = 1;
+				self.knight.action = 'idle';
+				const scale = 0.01;
 				self.knight.object.scale.set(scale, scale, scale); 
+
+                self.knight.object.rotateX(Math.PI/2);
+
 				
                 self.loadingBar.visible = false;
                 self.renderer.setAnimationLoop( self.render.bind(self) );
