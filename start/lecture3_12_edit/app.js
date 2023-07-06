@@ -1,5 +1,6 @@
 import * as THREE from '../../libs/three/three.module.js';
 import { GLTFLoader } from '../../libs/three/jsm/GLTFLoader.js';
+import { DRACOLoader } from '../../libs/three/js';
 import { RGBELoader } from '../../libs/three/jsm/RGBELoader.js';
 import { ARButton } from '../../libs/ARButton.js';
 import { LoadingBar } from '../../libs/LoadingBar.js';
@@ -72,11 +73,15 @@ class App{
     loadKnight(){
 	    const loader = new GLTFLoader().setPath(this.assetsPath);
 		const self = this;
+
+        const dracoLoader = new DRACOLoader();
+        dracoLoader.setDecode
+        loader.setDRACOLoader(dracoLoader);
 		
 		// Load a GLTF resource
 		loader.load(
 			// resource URL
-			`drunk.glb`,
+			`mario.glb`,
 			// called when the resource is loaded
 			function ( gltf ) {
 				const object = gltf.scene.children[0];
@@ -113,7 +118,7 @@ class App{
 			// called when loading has errors
 			function ( error ) {
 
-				console.log( 'An error happened' );
+				console.log( error );
 
 			}
 		);
