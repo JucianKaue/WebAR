@@ -75,7 +75,7 @@ class App{
 		const self = this;
 
         const dracoLoader = new DRACOLoader();
-        dracoLoader.setDecoderPath( '/examples/jsm/libs/draco/' );
+        dracoLoader.setDecoderPath( '../../libs/three/js/draco/' );
         loader.setDRACOLoader( dracoLoader );
 		
 		// Load a GLTF resource
@@ -102,8 +102,8 @@ class App{
                 self.knight.object.visible = false;
                 console.log(self.knight)
 				
-				self.knight.action = 'Armature|mixamo.com|Layer0';
-				const scale = 0.005;
+				self.knight.action = 'dance1';
+				const scale = 1;
 				self.knight.object.scale.set(scale, scale, scale); 
 				
                 self.loadingBar.visible = false;

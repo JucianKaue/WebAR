@@ -7,7 +7,7 @@ class Player{
 		this.assetsPath = options.assetsPath;
 		this.name = options.name | 'Player';
 		
-		this.animations = {};	
+		this.animations = {};
 		
 		options.app.scene.add(options.object);
 		
@@ -120,7 +120,7 @@ class Player{
 				});
 			}
 		} else {
-			this.action = 'idle';
+			this.action = 'stand';
 			
             if (self.pathfinder){
                 const closestPlayerNode = self.pathfinder.getClosestNode(player.position, this.ZONE, this.navMeshGroup);
